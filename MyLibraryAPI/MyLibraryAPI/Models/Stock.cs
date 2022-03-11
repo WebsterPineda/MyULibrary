@@ -11,6 +11,7 @@ namespace MyLibraryAPI.Models
     {
         [Key]
         public int StockId { get; set; }
+        [Index("Unq_Stock_BookId", IsUnique = true)]
         public int BookId { get; set; }
         public int Available { get; set; } = 0;
         [Required]

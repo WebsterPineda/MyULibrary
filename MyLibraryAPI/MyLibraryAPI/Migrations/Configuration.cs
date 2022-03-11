@@ -35,11 +35,20 @@
 
                 Models.User user = context.Users.FirstOrDefault(x => x.RoleId == librarianRole.RoleId);
 
-                IList<Models.Book> bookList = Seeders.BookSeeder.booksSeederList(user.UserId);
+                IList<Models.Book> bookList = context.Books.ToList();
+                if (bookList.Count == 0)
+                    bookList = Seeders.BookSeeder.booksSeederList(user.UserId);
 
                 if (!context.Books.Any())
                 {
                     context.Books.AddRange(bookList);
+
+                    context.SaveChanges();
+                }
+
+                if (!context.Stocks.Any())
+                {
+                    context.Stocks.AddRange(Seeders.StockSeeder.stocksSeederList(bookList));
 
                     context.SaveChanges();
                 }

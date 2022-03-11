@@ -79,7 +79,8 @@
                     })
                 .PrimaryKey(t => t.StockId)
                 .ForeignKey("dbo.Books", t => t.StockId)
-                .Index(t => t.StockId);
+                .Index(t => t.StockId)
+                .Index(t => t.BookId, unique: true, name: "Unq_Stock_BookId");
             
             CreateTable(
                 "dbo.CheckOuts",
@@ -111,6 +112,7 @@
             DropForeignKey("dbo.Users", "RoleId", "dbo.Roles");
             DropIndex("dbo.CheckOuts", new[] { "BookId" });
             DropIndex("dbo.CheckOuts", new[] { "StudentId" });
+            DropIndex("dbo.Stocks", "Unq_Stock_BookId");
             DropIndex("dbo.Stocks", new[] { "StockId" });
             DropIndex("dbo.Books", new[] { "UpdatedBy" });
             DropIndex("dbo.Books", new[] { "CreatedBy" });
