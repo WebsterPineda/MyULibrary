@@ -74,3 +74,4 @@ C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.dll
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.pdb
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.Migrations.Initial.resources
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.csproj.GenerateResource.cache
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.Migrations.UserTempPass.resources

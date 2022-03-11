@@ -18,7 +18,8 @@ namespace MyLibraryAPI.Seeders
                 Email = "john.doe@gmail.com",
                 RoleId = librariaRole.RoleId,
                 Password = pswdUtil.PasswordEncrypt("123456"),
-                Active = true
+                Active = true,
+                TempPassword = false
             });
             users.Add(new Models.User()
             {
@@ -27,7 +28,8 @@ namespace MyLibraryAPI.Seeders
                 Email = "jane.blow@hotmail.com",
                 Password = pswdUtil.PasswordEncrypt("123"),
                 RoleId = studentRole.RoleId,
-                Active = true
+                Active = true,
+                TempPassword = false
             });
             return users;
         }

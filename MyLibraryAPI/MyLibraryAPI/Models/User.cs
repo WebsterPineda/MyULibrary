@@ -18,6 +18,7 @@ namespace MyLibraryAPI.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public bool Active { get; set; }
+        public bool TempPassword { get; set; } = false;
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }

@@ -8,7 +8,9 @@
 - [X] ~~List requested books by a student.~~
 - [X] ~~List all students with current checked out books.~~
 - [X] ~~Return books.~~
-- [ ] Users management.
+- [X] ~~Users management.~~
+- [ ] **Auth tokens for users**
+- [ ] Books Management
 
 ## Roadmap
 
