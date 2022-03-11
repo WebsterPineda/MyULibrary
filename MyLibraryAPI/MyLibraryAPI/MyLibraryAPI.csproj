@@ -107,6 +107,7 @@
       <DependentUpon>202203101847580_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CheckOutViewModel.cs" />
     <Compile Include="Seeders\BookSeeder.cs" />
     <Compile Include="Seeders\StockSeeder.cs" />
     <Compile Include="Seeders\UserSeeder.cs" />

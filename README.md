@@ -2,11 +2,12 @@
 
 ## Current Task: API-REST
 
-- [X] ~~Base Models~~.
-- [X] ~~List books with a possible filter applied~~.
-- [X] ~~Create check outs for books~~.
-- [ ] **List requested books by a student**.
-- [ ] List all students with current checked out books.
+- [X] ~~Base Models.~~
+- [X] ~~List books with a possible filter applied.~~
+- [X] ~~Create check outs for books.~~
+- [X] ~~List requested books by a student.~~
+- [X] ~~List all students with current checked out books.~~
+- [X] ~~Return books.~~
 - [ ] Users management.
 
 ## Roadmap
