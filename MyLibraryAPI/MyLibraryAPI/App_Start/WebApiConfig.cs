@@ -14,6 +14,8 @@ namespace MyLibraryAPI
             // Rutas de API web
             config.MapHttpAttributeRoutes();
 
+            config.MessageHandlers.Add(new Auth.TokenValidationHandler());
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

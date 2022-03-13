@@ -52,6 +52,13 @@
 
                     context.SaveChanges();
                 }
+
+                if (!context.Privileges.Any())
+                {
+                    context.Privileges.AddRange(Seeders.PrivilegeSeeder.GeneratePrivileges(librarianRole.RoleId, studentRole.RoleId));
+
+                    context.SaveChanges();
+                }
             }
 
             base.Seed(context);

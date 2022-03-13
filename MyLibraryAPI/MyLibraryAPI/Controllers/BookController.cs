@@ -6,10 +6,12 @@ using System.Net;
 using System.Web.Http;
 
 using MyLibraryAPI.Context;
+using MyLibraryAPI.Helpers;
 using MyLibraryAPI.Models;
 
 namespace MyLibraryAPI.Controllers
 {
+    [Authorize]
     public class BookController : ApiController
     {
         [HttpGet]
@@ -46,18 +48,12 @@ namespace MyLibraryAPI.Controllers
             }
             catch (Exception e)
             {
-                string detailedError = e.Message;
-                detailedError += (e.InnerException != null) ? " - " + e.InnerException.Message : "";
-                return Content(HttpStatusCode.InternalServerError, new
-                {
-                    message = "Something went wrong.",
-                    detailedError
-                });
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
             }
         }
 
         [HttpGet]
-        public IHttpActionResult GetBook(int id)
+        public IHttpActionResult GetById(int id)
         {
             try
             {
@@ -80,14 +76,77 @@ namespace MyLibraryAPI.Controllers
                 }
             }catch (Exception e)
             {
-                string message = "Something went wrong!";
-                string detailedError = e.Message;
-                detailedError += (e.InnerException != null) ? " - " + e.InnerException.Message : "";
-                return Content(HttpStatusCode.InternalServerError, new
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult Create(Book book)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Content(HttpStatusCode.BadRequest, new { Message = "Bad data was received to create new book." });
+                if (string.IsNullOrWhiteSpace(book.Author) || string.IsNullOrWhiteSpace(book.Genre) || string.IsNullOrWhiteSpace(book.Title)
+                    || book.PublishedYear == 0)
+                    return Content(HttpStatusCode.BadRequest, new { Message = "Some data of book is missed, please verify." });
+                using (var context = new LibraryContext())
                 {
-                    message,
-                    detailedError
-                });
+                    context.Books.Add(book);
+                    context.SaveChanges();
+
+                    Stock stock = context.Stocks.SingleOrDefault(x => x.BookId == book.BookId);
+
+                    if (stock == null)
+                    {
+                        stock = new Stock()
+                        {
+                            BookId = book.BookId,
+                            Available = 0,
+                            Book = book
+                        };
+                        context.Stocks.Add(stock);
+
+                        context.SaveChanges();
+                    }
+                    return Ok(new { Message = "Book was created succesfully" });
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
+            }
+        }
+
+        [HttpPut]
+        public IHttpActionResult Update([FromUri]int id, [FromBody]Book book)
+        {
+            if (id == 0)
+                return Content(HttpStatusCode.BadRequest, new { Message = "Invalid data to update" });
+            try
+            {
+                using (LibraryContext context = new LibraryContext())
+                {
+                    var dbBook = context.Books.SingleOrDefault(b => b.BookId == id);
+                    if (dbBook == null)
+                        return Content(HttpStatusCode.NotFound, new { Message = "Book not found." });
+
+                    if (!string.IsNullOrWhiteSpace(book.Author))
+                        dbBook.Author = book.Author;
+                    if (!string.IsNullOrWhiteSpace(book.Title))
+                        dbBook.Title = book.Title;
+                    if (!string.IsNullOrWhiteSpace(book.Genre))
+                        dbBook.Genre = book.Genre;
+                    if (book.PublishedYear != 0)
+                        dbBook.PublishedYear = book.PublishedYear;
+
+                    context.SaveChanges();
+                    return Content(HttpStatusCode.OK, new { Message = "Book updated successfully" });
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
             }
         }
     }

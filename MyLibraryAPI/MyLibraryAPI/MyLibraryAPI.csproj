@@ -104,6 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Auth\TokenGenerator.cs" />
+    <Compile Include="Auth\TokenValidationHandler.cs" />
     <Compile Include="Context\LibraryContext.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
@@ -114,8 +116,10 @@
     </Compile>
     <Compile Include="Helpers\AuditCheckers.cs" />
     <Compile Include="Helpers\AuditUserChecker.cs" />
+    <Compile Include="Helpers\ErrorsUtil.cs" />
     <Compile Include="Helpers\PasswordUtil.cs" />
     <Compile Include="Helpers\RoleUtil.cs" />
+    <Compile Include="Helpers\TokenUtil.cs" />
     <Compile Include="Helpers\UserUtils.cs" />
     <Compile Include="Migrations\202203101847580_Initial.cs" />
     <Compile Include="Migrations\202203101847580_Initial.designer.cs">
@@ -125,11 +129,18 @@
     <Compile Include="Migrations\202203111831382_UserTempPass.designer.cs">
       <DependentUpon>202203111831382_UserTempPass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203131856312_Privileges.cs" />
+    <Compile Include="Migrations\202203131856312_Privileges.designer.cs">
+      <DependentUpon>202203131856312_Privileges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CheckOutViewModel.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Privilege.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Models\UserValidation.cs" />
     <Compile Include="Seeders\BookSeeder.cs" />
+    <Compile Include="Seeders\PrivilegeSeeder.cs" />
     <Compile Include="Seeders\StockSeeder.cs" />
     <Compile Include="Seeders\UserSeeder.cs" />
     <Compile Include="Models\AuditModel.cs" />
@@ -161,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203111831382_UserTempPass.resx">
       <DependentUpon>202203111831382_UserTempPass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203131856312_Privileges.resx">
+      <DependentUpon>202203131856312_Privileges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

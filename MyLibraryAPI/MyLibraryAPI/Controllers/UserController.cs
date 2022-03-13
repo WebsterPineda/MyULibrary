@@ -5,69 +5,48 @@ using System.Net;
 using System.Web.Http;
 
 using MyLibraryAPI.Context;
+using MyLibraryAPI.Helpers;
 using MyLibraryAPI.Models;
 
 namespace MyLibraryAPI.Controllers
 {
+    [Authorize]
     public class UserController : ApiController
     {
-        public IHttpActionResult GetUsers()
+        [HttpGet]
+        public IHttpActionResult GetById(int id)
         {
             try
             {
                 using(LibraryContext context = new LibraryContext())
                 {
-                    var list = context.Users.Where(x => x.Active == true).Select(
-                        u => new{
+                    int usrId = int.Parse(TokenUtil.ClaimValue("Usr", RequestContext.Principal));
+
+                    if (id != usrId)
+                        return Content(HttpStatusCode.Forbidden, new { Message = "User is not authorized to retrieve that data." });
+
+                    var usr = context.Users.Select(u => new
+                        {
                             u.UserId,
                             u.FirstName,
                             u.LastName,
-                            u.RoleId,
                             u.Email,
-                            u.Role.Description
-                        }).ToList();
+                            u.Active
+                        }).SingleOrDefault(u => u.UserId == id && u.Active == true);
 
-                    List<UserView> users = new List<UserView>();
+                    if (usr == null)
+                        return Content(HttpStatusCode.NotFound, new { Message = "User was not found or is inactive." });
 
-                    foreach (var item in list) {
-                        users.Add(new UserView()
-                        {
-                            UserId = item.UserId,
-                            Email = item.Email,
-                            FirstName = item.FirstName,
-                            LastName = item.LastName,
-                            RoleId = item.RoleId,
-                            Role = item.Description
-                        });
-                    }
-
-                    if (users.Count == 0)
-                        return Content(HttpStatusCode.NotFound, new
-                        {
-                            Message = "No users have been found."
-                        });
-                    return Ok(users);
+                    return Ok(usr);
                 }
             }catch(Exception e)
             {
-                string Message = "Something went wrong.";
-                string DetailedError = e.Message;
-                Exception ex = e.InnerException;
-                while (ex != null)
-                {
-                    DetailedError += " => " + ex.Message;
-                    ex = ex.InnerException;
-                }
-                return Content(HttpStatusCode.InternalServerError, new
-                {
-                    Message,
-                    DetailedError
-                });
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
             }
         }
 
         [HttpPost]
-        public IHttpActionResult Register(User user)
+        public IHttpActionResult Create(User user)
         {
             try
             {
@@ -78,7 +57,7 @@ namespace MyLibraryAPI.Controllers
                     });
                 using (LibraryContext context = new LibraryContext())
                 {
-                    var validation = Helpers.UserUtils.UserExists(context, user);
+                    var validation = UserUtils.UserExists(context, user);
 
                     if (validation)
                         return Content(HttpStatusCode.Conflict, new
@@ -86,11 +65,11 @@ namespace MyLibraryAPI.Controllers
                             Message = "User already exists"
                         });
 
-                    Helpers.PasswordUtil password = new Helpers.PasswordUtil();
+                    PasswordUtil password = new PasswordUtil();
 
                     string pass = password.GenerateRandomPassword();
 
-                    if (!Helpers.RoleUtil.RoleExists(context, user.RoleId))
+                    if (!RoleUtil.RoleExists(context, user.RoleId))
                         return Content(HttpStatusCode.Conflict, new
                         {
                             Message = "The role asociated with the user doesn't exist."
@@ -119,19 +98,44 @@ namespace MyLibraryAPI.Controllers
                 }
             }catch (Exception e)
             {
-                string Message = "Something went wrong!";
-                string DetailedError = e.Message;
-                Exception ex = e.InnerException;
-                while (ex != null)
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
+            }
+        }
+
+        [HttpPut]
+        public IHttpActionResult Update(User user)
+        {
+            try
+            {
+                int usrId = int.Parse(TokenUtil.ClaimValue("Usr", RequestContext.Principal));
+                int roleId = int.Parse(TokenUtil.ClaimValue("Type", RequestContext.Principal));
+
+                using (LibraryContext context = new LibraryContext())
                 {
-                    DetailedError += " => " + ex.Message;
-                    ex = ex.InnerException;
+                    var usr = context.Users.SingleOrDefault(x => x.UserId == user.UserId);
+                    var role = context.Roles.SingleOrDefault(r => r.RoleId == roleId);
+                    if (role == null)
+                        return Content(HttpStatusCode.BadRequest, new { Message = "Theres problem with user type" });
+
+                    if (user.UserId != usrId && role.Description.ToLower().Equals("student")
+                        || (user.UserId == usrId && !usr.Active) || (roleId != usr.RoleId))
+                    {
+                        return Content(HttpStatusCode.Forbidden, "You don't have required permissions to perform that action.");
+                    }
+
+                    if (user.FirstName != null)
+                        usr.FirstName = user.FirstName;
+                    if (user.LastName != null)
+                        usr.LastName = user.LastName;
+
+                    context.SaveChanges();
+
+                    return Content(HttpStatusCode.OK, new { Message = "User has been updated!" });
                 }
-                return Content(HttpStatusCode.InternalServerError, new
-                {
-                    Message,
-                    DetailedError
-                });
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
             }
         }
     }

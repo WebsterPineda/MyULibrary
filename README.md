@@ -1,21 +1,17 @@
 # MyULibrary
 
-## Current Task: API-REST
+## Current Task: Angular web app
 
-- [X] ~~Base Models.~~
-- [X] ~~List books with a possible filter applied.~~
-- [X] ~~Create check outs for books.~~
-- [X] ~~List requested books by a student.~~
-- [X] ~~List all students with current checked out books.~~
-- [X] ~~Return books.~~
-- [X] ~~Users management.~~
-- [ ] **Auth tokens for users**
-- [ ] Books Management
+- [ ] **Login View.**
+- [ ] Users Views.
+- [ ] Books Search.
+- [ ] CheckOuts.
+- [ ] Stock Review.
 
 ## Roadmap
 
-- [ ] **API-REST**
-- [ ] Angular web app
+- [X] ~~API-REST~~
+- [ ] **Angular web app**
 
 ## Technologies Used
 

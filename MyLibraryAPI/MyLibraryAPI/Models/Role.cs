@@ -12,5 +12,6 @@ namespace MyLibraryAPI.Models
         [Index(IsUnique = true)]
         public string Description { get; set; }
         public virtual ICollection<User> Users { get; set;  }
+        public virtual ICollection<Privilege> Privileges { get; set; }
     }
 }

@@ -5,14 +5,16 @@ using System.Net;
 using System.Web.Http;
 
 using MyLibraryAPI.Context;
+using MyLibraryAPI.Helpers;
 using MyLibraryAPI.Models;
 
 namespace MyLibraryAPI.Controllers
 {
+    [Authorize]
     public class CheckOutController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult GetRequests(CheckOut check)
+        public IHttpActionResult Get(CheckOut check)
         {
             try
             {
@@ -62,24 +64,12 @@ namespace MyLibraryAPI.Controllers
                 }
             }catch (Exception e)
             {
-                string Message = "Something went wrong!";
-                string DetailedError = e.Message;
-                Exception ex = e.InnerException;
-                while (ex != null)
-                {
-                    DetailedError += " => " + ex.Message;
-                    ex = ex.InnerException;
-                }
-                return Content(HttpStatusCode.InternalServerError, new
-                {
-                    Message,
-                    DetailedError
-                });
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
             }
         }
 
         [HttpPost]
-        public IHttpActionResult PostRequest(CheckOut check)
+        public IHttpActionResult Create(CheckOut check)
         {
             if (!ModelState.IsValid)
                 return Content(HttpStatusCode.BadRequest, new
@@ -132,19 +122,12 @@ namespace MyLibraryAPI.Controllers
                 }
             }catch (Exception e)
             {
-                string Message = "Something went wrong!";
-                string DetailedError = e.Message;
-                DetailedError += (e.InnerException != null) ? " - " + e.InnerException.Message : "";
-                return Content(HttpStatusCode.InternalServerError, new
-                {
-                    Message,
-                    DetailedError
-                });
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
             }
         }
 
         [HttpPut]
-        public IHttpActionResult ReturnBook(int id)
+        public IHttpActionResult Update(int id)
         {
             try
             {
@@ -166,19 +149,7 @@ namespace MyLibraryAPI.Controllers
                 }
             }catch (Exception e)
             {
-                string Message = "Something went wrong!";
-                string DetailedError = e.Message;
-                Exception ex = e.InnerException;
-                while (ex != null)
-                {
-                    DetailedError += " => " + ex.Message;
-                    ex = ex.InnerException;
-                }
-                return Content(HttpStatusCode.InternalServerError, new
-                {
-                    Message,
-                    DetailedError
-                });
+                return Content(HttpStatusCode.InternalServerError, ErrorsUtil.GetErrorMessage(e));
             }
         }
     }

@@ -9,9 +9,11 @@ using MyLibraryAPI.Models;
 
 namespace MyLibraryAPI.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : ApiController
     {
-        public IHttpActionResult Get(Login user)
+        [HttpPost]
+        public IHttpActionResult Login(Login user)
         {
             if (!ModelState.IsValid)
                 return Content(HttpStatusCode.BadRequest, new
@@ -33,16 +35,9 @@ namespace MyLibraryAPI.Controllers
 
                     if (Helpers.PasswordUtil.PasswordVerify(user.Password, usr.Password))
                     {
-                        User person = new User()
-                        {
-                            Email = usr.Email,
-                            FirstName = usr.FirstName,
-                            LastName = usr.LastName,
-                            RoleId = usr.RoleId,
-                            Active = usr.Active,
-                            TempPassword = usr.TempPassword
-                        };
-                        return Ok(person);
+                        Token token = Auth.TokenGenerator.Generate(usr.UserId, usr.RoleId);
+
+                        return Ok(token);
                     }
                     return Content(HttpStatusCode.Conflict, new
                     {

@@ -75,3 +75,12 @@ C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.pdb
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.Migrations.Initial.resources
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.csproj.GenerateResource.cache
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.Migrations.UserTempPass.resources
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.Logging.dll
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.Logging.xml
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.Tokens.dll
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.Tokens.xml
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.Migrations.Privileges.resources

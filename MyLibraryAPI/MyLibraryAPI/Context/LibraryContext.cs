@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
-using System.Linq;
 using System.Text;
-using System.Web;
 
 using MyLibraryAPI.Models;
 
@@ -31,7 +27,6 @@ namespace MyLibraryAPI.Context
             try
             {
                 Helpers.AuditCheckers.CheckAuditories(ChangeTracker);
-
                 Helpers.AuditUserChecker.CheckAuditUser(ChangeTracker);
 
                 return base.SaveChanges();
@@ -61,5 +56,6 @@ namespace MyLibraryAPI.Context
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<CheckOut> CheckOuts { get; set; }
+        public virtual DbSet<Privilege> Privileges { get; set; }
     }
 }
