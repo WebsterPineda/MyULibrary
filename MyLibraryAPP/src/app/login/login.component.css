@@ -1,0 +1,7 @@
+.login, .image{
+    min-height: 100vh;
+}
+
+.invalid-feedback{
+    margin-left: 20px;
+}

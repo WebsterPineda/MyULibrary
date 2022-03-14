@@ -4,7 +4,7 @@ using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-
+using System.Web.Http.Cors;
 using MyLibraryAPI.Context;
 using MyLibraryAPI.Helpers;
 using MyLibraryAPI.Models;
@@ -12,6 +12,7 @@ using MyLibraryAPI.Models;
 namespace MyLibraryAPI.Controllers
 {
     [Authorize]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class BookController : ApiController
     {
         [HttpGet]

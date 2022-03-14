@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-
+using System.Web.Http.Cors;
 using MyLibraryAPI.Context;
 using MyLibraryAPI.Models;
 
 namespace MyLibraryAPI.Controllers
 {
     [AllowAnonymous]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class LoginController : ApiController
     {
         [HttpPost]

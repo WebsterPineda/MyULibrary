@@ -84,3 +84,6 @@ C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.JsonWeb
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\Microsoft.IdentityModel.Tokens.xml
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\System.IdentityModel.Tokens.Jwt.xml
 C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\obj\Debug\MyLibraryAPI.Migrations.Privileges.resources
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\System.Web.Cors.dll
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\System.Web.Http.Cors.dll
+C:\repo\MyULibrary\MyLibraryAPI\MyLibraryAPI\bin\System.Web.Http.Cors.xml
